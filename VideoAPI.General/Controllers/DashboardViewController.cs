@@ -82,5 +82,71 @@ namespace VideoAPI.General.Controllers {
             } else
                 return View();
         }
+
+        [Route("showvideos")]
+        public async Task<IActionResult> ShowAllVideo() {
+            var videos = await GenericGetDataClass<List<VideoModel>>.GetAllData("api/videos");
+            return View(videos);
+        }
+
+        [Route("showvideo/{id}")]
+        public async Task<IActionResult> ShowByIdVideos(int id) {
+            var video = await GenericGetDataClass<VideoModel>.GetAllData($"api/video/{id}");
+            return View(video);
+        }
+
+        [HttpGet]
+        [Route("editvideo/{id}")]
+        public async Task<IActionResult> EditVideo(int id) {
+            var video = await GenericGetDataClass<VideoModel>.GetAllData($"api/video/{id}");
+            return View(video);
+        }
+
+        [HttpPost]
+        [Route("editvideo")]
+        public async Task<IActionResult> EditVideo(VideoModel editedVideo) {
+            if (!ModelState.IsValid)
+                return View(editedVideo);
+
+            var response = await GenericGetDataClass<VideoModel>.EditData("api/editvideo", editedVideo);
+
+            if (response) {
+                TempData["SM"] = "Видео успешно отредактировано!";
+                return RedirectToAction(nameof(ShowAllVideo));
+            } else
+                return View(editedVideo);
+        }
+
+        [HttpGet]
+        [Route("addvideo")]
+        public IActionResult AddVideo() {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("addvideo")]
+        public async Task<IActionResult> AddVideo(VideoModel addedVideo) {
+            if (!ModelState.IsValid)
+                return View(addedVideo);
+
+            var response = await GenericGetDataClass<VideoModel>.AddData("api/addvideo", addedVideo);
+            if (response) {
+                TempData["SM"] = "Видео успешно добавлено!";
+                return RedirectToAction(nameof(ShowAllVideo));
+            } else
+                return View(addedVideo);
+        }
+
+        [Route("deletevideo/{id}")]
+        public async Task<IActionResult> DeleteVideo(int id) {
+            var response = await GenericGetDataClass<VideoModel>.DeleteData($"api/deletevideo/{id}");
+            if (response) {
+                TempData["SM"] = "Видео успешно удалено!";
+                return RedirectToAction(nameof(ShowAllVideo));
+            } else
+                return View();
+        }
+
+
     }
 }

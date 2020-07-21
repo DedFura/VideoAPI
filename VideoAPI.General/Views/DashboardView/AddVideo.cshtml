@@ -1,0 +1,55 @@
+﻿@model VideoAPI.Models.Models.VideoModel
+
+@{
+    ViewData["Title"] = "Add new video";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="jumbotron text-center">
+            <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+            <h3 class="text-center">Добавить видео:</h3>
+            
+
+            <form method="post" action="~/dashboard/addvideo">
+                <div class="form-group row">
+                    <label asp-for="Name" class="col-sm-2 col-form-label">Наименоваие: </label>
+                    <div class="col-sm-7">
+                        <input class="form-control" asp-for="Name" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="CategoryId" class="col-sm-2 col-form-label">ID категории: </label>
+                    <div class="col-sm-7">
+                        <input class="form-control" asp-for="CategoryId" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="CategoryId"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Path" class="col-sm-2 col-form-label"> Путь к файлу: </label>
+                    <div class="col-sm-7">
+                        <input class="form-control" asp-for="Path" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Path"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 form-check-label" asp-for="IsCorrect">Корректность: </label>
+                    <div class="col-sm-1">
+                        <div class="form-check">
+                            <input class="form-check-input" asp-for="IsCorrect">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <input type="submit" class="btn btn-success btn-lg" value="Сохранить" />
+                <a class="btn btn-primary btn-lg" href="/dashboard/showvideos" role="button">Назад</a>
+            </form>
+            <hr class="my-4">
+        </div>
+    </div>
+</div>

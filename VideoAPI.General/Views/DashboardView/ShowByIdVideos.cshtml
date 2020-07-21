@@ -1,0 +1,24 @@
+﻿@model VideoAPI.Models.Models.VideoModel
+
+@{
+    ViewData["Title"] = "One video";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="jumbotron text-center">
+            <h2>Видео: @Model.Name</h2>
+            <p class="lead text-left">Видео ID : @Model.Id</p>
+            <p class="lead text-left">ID категории : @Model.CategoryId</p>
+            <p class="lead text-left">Корректность : @Model.IsCorrect</p>
+            <iframe width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/fxCEcPxUbYA"
+                    frameborder="0"
+                    allowfullscreen>
+            </iframe>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="/dashboard/showvideos" role="button">Назад</a>
+        </div>
+    </div>
+</div>
