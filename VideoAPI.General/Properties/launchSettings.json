@@ -20,7 +20,7 @@
     "VideoAPI.General": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/Home",
+      "launchUrl": "dashboard/index",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

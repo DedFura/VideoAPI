@@ -10,16 +10,15 @@ using VideoAPI.Models.Models;
 using VideoAPI.Services.Interfaces;
 
 namespace TaskManagementApp.Infrastructure.Repository {
-    public class TaskRepository : ITaskRepository {
-
+    public class CategoryRepository : ICategoryRepository {
         private readonly IConfiguration _configuration;
 
-        public TaskRepository(IConfiguration configuration) {
+        public CategoryRepository(IConfiguration configuration) {
             _configuration = configuration;
         }
 
-        public async Task<int> Add(VideoModel entity) {
-            var sql = "INSERT INTO Video (Name, Path, CategoryId, IsCorrect) Values (@Name, @Path, @CategoryId, @IsCorrect);";
+        public async Task<int> Add(CategoryModel entity) {
+            var sql = "INSERT INTO Category (Name) Values (@Name);";
 
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
                 connection.Open();
@@ -31,7 +30,7 @@ namespace TaskManagementApp.Infrastructure.Repository {
         }
 
         public async Task<int> Delete(int id) {
-            var sql = "DELETE FROM Video WHERE Id = @Id;";
+            var sql = "DELETE FROM Category WHERE Id = @Id;";
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
                 connection.Open();
                 var affectedRow = await connection.ExecuteAsync(sql, new { Id = id });
@@ -39,26 +38,25 @@ namespace TaskManagementApp.Infrastructure.Repository {
             }
         }
 
-        public async Task<VideoModel> Get(int id) {
-            var sql = "SELECT * FROM VIDEO WHERE Id = @Id;";
+        public async Task<CategoryModel> Get(int id) {
+            var sql = "SELECT * FROM Category WHERE Id = @Id;";
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
                 connection.Open();
-                var affectedRow = await connection.QueryAsync<VideoModel>(sql, new { Id = id });
-                return affectedRow.FirstOrDefault(); // возвращаем первый из списка
+                var affectedRow = await connection.QueryAsync<CategoryModel>(sql, new { Id = id });
+                return affectedRow.FirstOrDefault();
             }
         }
 
-        public async Task<IEnumerable<VideoModel>> GetAll() {
-            var sql = "SELECT * FROM VIDEO;";
+        public async Task<IEnumerable<CategoryModel>> GetAll() {
+            var sql = "SELECT * FROM Category;";
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
                 connection.Open();
-                var affectedRow = await connection.QueryAsync<VideoModel>(sql);
+                var affectedRow = await connection.QueryAsync<CategoryModel>(sql);
                 return affectedRow;
             }
         }
-
-        public async Task<int> Update(VideoModel entity) {
-            var sql = "UPDATE Video SET Name = @Name, Path = @Path, CategoryId = @CategoryId, IsCorrect = @IsCorrect WHERE Id = @Id;";
+        public async Task<int> Update(CategoryModel entity) {
+            var sql = "UPDATE Category SET Name = @Name WHERE Id = @Id;";
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
                 connection.Open();
                 var affectedRow = await connection.ExecuteAsync(sql, entity);
