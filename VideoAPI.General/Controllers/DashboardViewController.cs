@@ -147,6 +147,12 @@ namespace VideoAPI.General.Controllers {
                 return View();
         }
 
+        [Route("showusers")]
+        public async Task<IActionResult> ShowAllUsers() {
+            var users = await GenericGetDataClass<IEnumerable<EmployeeModel>>.GetAllData("api/users");
+            return View(users);
+        }
+
 
     }
 }
