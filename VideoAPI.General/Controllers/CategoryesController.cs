@@ -30,21 +30,21 @@ namespace VideoAPI.General.Controllers {
         }
 
         [HttpPut]
-        [Route("edit")]
+        [Route("editcategory")]
         public Task<int> EditCategory(CategoryModel editedCategory)
         {
             return _categoryOfWork.Categoryes.Update(editedCategory);
         }
 
         [HttpPost]
-        [Route("add")]
+        [Route("addcategory")]
         public Task<int> AddCategory(CategoryModel addedCategory)
         {
             return _categoryOfWork.Categoryes.Add(addedCategory);
         }
 
         [HttpDelete]
-        [Route("delete/{id}")]
+        [Route("deletecategory/{id}")]
         public Task<int> DeleteCategory(int id)
         {
             return _categoryOfWork.Categoryes.Delete(id);

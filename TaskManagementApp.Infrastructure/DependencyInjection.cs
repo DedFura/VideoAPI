@@ -12,7 +12,7 @@ namespace TaskManagementApp.Infrastructure {
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICategoryOfWork, CategoryOfWork>();
-            services.AddTransient<IEmployeeRepository, UserRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IEmployeeOfWork, UserOfWork>();
 
 

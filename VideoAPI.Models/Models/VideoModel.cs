@@ -9,7 +9,7 @@ namespace VideoAPI.Models.Models {
         [Required]
         [MaxLength(50), MinLength(3)]
         public string Name { get; set; }
-        [Required]
+        
         [MaxLength(300)]
         public string Path { get; set; }
         [Required]

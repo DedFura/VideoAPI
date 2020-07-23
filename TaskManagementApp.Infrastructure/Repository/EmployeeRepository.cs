@@ -10,11 +10,11 @@ using VideoAPI.Models.Models;
 using VideoAPI.Services.Interfaces;
 
 namespace TaskManagementApp.Infrastructure.Repository {
-    class UserRepository : IEmployeeRepository {
+    class EmployeeRepository : IEmployeeRepository {
 
         private readonly IConfiguration _configuration;
 
-        public UserRepository(IConfiguration configuration) {
+        public EmployeeRepository(IConfiguration configuration) {
             _configuration = configuration;
         }
 

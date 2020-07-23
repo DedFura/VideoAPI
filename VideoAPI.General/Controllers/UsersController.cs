@@ -24,5 +24,26 @@ namespace VideoAPI.General.Controllers {
         {
             return _userOfWork.Users.GetAll();
         }
+
+        [HttpGet]
+        [Route("user/{id}")]
+        public Task<EmployeeModel> Get(int id)
+        {
+            return _userOfWork.Users.Get(id);
+        }
+
+        [HttpPut]
+        [Route("edituser")]
+        public Task<int> EditUser(EmployeeModel editedUser)
+        {
+            return _userOfWork.Users.Update(editedUser);
+        }
+
+        [HttpDelete]
+        [Route("deleteuser/{id}")]
+        public Task<int> DeleteUser(int id)
+        {
+            return _userOfWork.Users.Delete(id);
+        }
     }
 }

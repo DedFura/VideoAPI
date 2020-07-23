@@ -1,48 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VideoAPI.General.Utility;
 using VideoAPI.Models.Models;
 
 namespace VideoAPI.General.Controllers {
     [Route("dashboard")]
     public class DashboardViewController : Controller {
+
+
         [Route("index")]
         public IActionResult Index() {
             return View();
         }
 
-        [Route("showall")]
-        public async Task<IActionResult> ShowAllCategories()
-        {
+        [Route("showcategories")]
+        public async Task<IActionResult> ShowAllCategories() {
             var categories = await GenericGetDataClass<List<CategoryModel>>.GetAllData("api/categories");
             return View(categories);
         }
 
-        [Route("showone/{id}")]
-        public async Task<IActionResult> ShowByIdCategories(int id)
-        {
+        [Route("showcategory/{id}")]
+        public async Task<IActionResult> ShowByIdCategories(int id) {
             var category = await GenericGetDataClass<CategoryModel>.GetAllData($"api/category/{id}");
             return View(category);
         }
 
         [HttpGet]
-        [Route("edit/{id}")]
+        [Route("editcategory/{id}")]
         public async Task<IActionResult> EditCategory(int id) {
             var category = await GenericGetDataClass<CategoryModel>.GetAllData($"api/category/{id}");
             return View(category);
         }
 
         [HttpPost]
-        [Route("edit")]
-        public async Task<IActionResult> EditCategory(CategoryModel editedCategory)
-        {
+        [Route("editcategory")]
+        public async Task<IActionResult> EditCategory(CategoryModel editedCategory) {
             if (!ModelState.IsValid)
                 return View(editedCategory);
 
-            var response = await GenericGetDataClass<CategoryModel>.EditData("api/edit", editedCategory);
+            var response = await GenericGetDataClass<CategoryModel>.EditData("api/editcategory", editedCategory);
 
             if (response) {
                 TempData["SM"] = "Категория успешно отредактирована!";
@@ -52,20 +55,18 @@ namespace VideoAPI.General.Controllers {
         }
 
         [HttpGet]
-        [Route("add")]
-        public IActionResult AddCategory()
-        {
+        [Route("addcategory")]
+        public IActionResult AddCategory() {
             return View();
         }
 
         [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> AddCategory(CategoryModel addCategoryModel)
-        {
+        [Route("addcategory")]
+        public async Task<IActionResult> AddCategory(CategoryModel addCategoryModel) {
             if (!ModelState.IsValid)
                 return View(addCategoryModel);
 
-            var response = await GenericGetDataClass<CategoryModel>.AddData("api/add", addCategoryModel);
+            var response = await GenericGetDataClass<CategoryModel>.AddData("api/addcategory", addCategoryModel);
             if (response) {
                 TempData["SM"] = "Категория успешно добавлена!";
                 return RedirectToAction(nameof(ShowAllCategories));
@@ -73,9 +74,9 @@ namespace VideoAPI.General.Controllers {
                 return View(addCategoryModel);
         }
 
-        [Route("delete/{id}")]
+        [Route("deletecategory/{id}")]
         public async Task<IActionResult> DeleteCategory(int id) {
-            var response = await GenericGetDataClass<CategoryModel>.DeleteData($"api/delete/{id}");
+            var response = await GenericGetDataClass<CategoryModel>.DeleteData($"api/deletecategory/{id}");
             if (response) {
                 TempData["SM"] = "Категория успешно удалена!";
                 return RedirectToAction(nameof(ShowAllCategories));
@@ -128,7 +129,6 @@ namespace VideoAPI.General.Controllers {
         public async Task<IActionResult> AddVideo(VideoModel addedVideo) {
             if (!ModelState.IsValid)
                 return View(addedVideo);
-
             var response = await GenericGetDataClass<VideoModel>.AddData("api/addvideo", addedVideo);
             if (response) {
                 TempData["SM"] = "Видео успешно добавлено!";
@@ -136,6 +136,8 @@ namespace VideoAPI.General.Controllers {
             } else
                 return View(addedVideo);
         }
+
+
 
         [Route("deletevideo/{id}")]
         public async Task<IActionResult> DeleteVideo(int id) {
@@ -153,6 +155,36 @@ namespace VideoAPI.General.Controllers {
             return View(users);
         }
 
+
+        [HttpGet]
+        [Route("edituser/{id}")]
+        public async Task<IActionResult> EditUser(int id) {
+            var user = await GenericGetDataClass<EmployeeModel>.GetAllData($"api/user/{id}");
+            return View(user);
+        }
+
+        [Route("edituser")]
+        public async Task<IActionResult> EditUser(EmployeeModel editedUser) {
+            if (!ModelState.IsValid)
+                return View(editedUser);
+            var response = await GenericGetDataClass<EmployeeModel>.EditData("api/edituser", editedUser);
+
+            if (response) {
+                TempData["SM"] = "Пользователь успешно отредактирован!";
+                return RedirectToAction(nameof(ShowAllUsers));
+            } else
+                return View(editedUser);
+        }
+
+        [Route("deleteuser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id) {
+            var response = await GenericGetDataClass<EmployeeModel>.DeleteData($"api/deleteuser/{id}");
+            if (response) {
+                TempData["SM"] = "Пользователь успешно удален!";
+                return RedirectToAction(nameof(ShowAllUsers));
+            } else
+                return View();
+        }
 
     }
 }

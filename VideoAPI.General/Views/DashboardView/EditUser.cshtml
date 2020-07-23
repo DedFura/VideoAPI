@@ -1,0 +1,48 @@
+﻿@model VideoAPI.Models.Models.EmployeeModel
+
+@{
+    ViewData["Title"] = "Edit user";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="jumbotron text-center">
+            <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+            <h3 class="text-center">@Model.Login</h3>
+            <p class="lead text-center">ID пользователя : @Model.Id</p>
+
+
+            <form method="post" action="~/dashboard/edituser">
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <div class="form-group row">
+                    <label asp-for="Login" class="col-sm-2 col-form-label">Логин: </label>
+                    <div class="col-sm-7">
+                        <input class="form-control" asp-for="Login" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Login"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Password" class="col-sm-2 col-form-label">Пароль: </label>
+                    <div class="col-sm-7">
+                        <input class="form-control" asp-for="Password" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Password"></span>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="Role" class="col-sm-2 col-form-label"> Права доступа: </label>
+                    <div class="col-sm-7">
+                        <input class="form-control" asp-for="Role" />
+                    </div>
+                    <span class="text-danger" asp-validation-for="Role"></span>
+                </div>
+
+                <hr class="my-4">
+                <input type="submit" class="btn btn-success btn-lg" value="Сохранить" />
+                <a class="btn btn-primary btn-lg" href="/dashboard/showusers" role="button">Назад</a>
+            </form>
+        </div>
+    </div>
+</div>

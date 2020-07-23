@@ -22,7 +22,7 @@
 }
 
 
-<div class="row mt-2">
+<div class="row justify-content-md-center">
     <div class="col">
         <table class="table table-striped">
             <thead class="table-info">
@@ -31,6 +31,7 @@
                     <th>@Html.DisplayNameFor(x => x.Login)</th>
                     <th>@Html.DisplayNameFor(x => x.Password)</th>
                     <th>@Html.DisplayNameFor(x => x.Login)</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +41,10 @@
                     <td>>@Html.DisplayFor(x => item.Login)</td>
                     <td>>@Html.DisplayFor(x => item.Password)</td>
                     <td>>@Html.DisplayFor(x => item.Login)</td>
+                    <td>
+                        <a href="/dashboard/edituser/@item.Id" class="btn btn-success"><i class="fas fa-edit fa-lg"></i></a>
+                        <a href="/dashboard/deleteuser/@item.Id" class="btn btn-danger"><i class="fas fa-trash-alt fa-lg"></i></a>
+                    </td>
                 </tr>
                 }
             </tbody>
