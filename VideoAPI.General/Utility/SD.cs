@@ -8,6 +8,6 @@ namespace VideoAPI.General.Utility {
     {
         public const string DefaultVideoName = "default_video.mp4";
 
-        public const string VideosFolder = @"videos\Video";
+        public const string VideosFolder = @"Videos\Video";
     }
 }

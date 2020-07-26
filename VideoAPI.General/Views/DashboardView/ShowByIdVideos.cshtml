@@ -11,12 +11,16 @@
             <p class="lead text-left">Видео ID : @Model.Id</p>
             <p class="lead text-left">ID категории : @Model.CategoryId</p>
             <p class="lead text-left">Корректность : @Model.IsCorrect</p>
-            <iframe width="560"
-                    height="315"
-                    src="https://www.youtube.com/embed/fxCEcPxUbYA"
-                    frameborder="0"
-                    allowfullscreen>
-            </iframe>
+           
+            <video width="600" height="400" controls>
+                <source src="@Model.Path" type="video/mp4" />
+                Ваш браузер не поддерживает видео.
+            </video>
+
+            <div class="m-4">
+                <a href="@Model.Path" class="btn btn-success" download>Скачать видео</a>
+            </div>
+
             <hr class="my-4">
             <a class="btn btn-primary btn-lg" href="/dashboard/showvideos" role="button">Назад</a>
         </div>

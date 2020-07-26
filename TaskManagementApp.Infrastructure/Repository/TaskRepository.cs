@@ -29,6 +29,29 @@ namespace TaskManagementApp.Infrastructure.Repository {
                 return affectedRow;
             }
         }
+        public async Task<int> Add(VideoVM entity) {
+
+            var sql = "INSERT INTO Video (Name, Path, CategoryId, IsCorrect) Values (@Name, @Path, @CategoryId, @IsCorrect);";
+
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
+                connection.Open();
+                var affectedRow = await connection.ExecuteAsync(sql, entity.VideoModel);
+
+                return affectedRow;
+            }
+        }
+
+        public async Task<int> Add(List <VideoModel> entity) {
+            var sql = "INSERT INTO Video (Name, Path, CategoryId, IsCorrect) Values (@Name, @Path, @CategoryId, @IsCorrect);";
+
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"))) {
+                connection.Open();
+
+                var affectedRow = await connection.ExecuteAsync(sql, entity);
+
+                return affectedRow;
+            }
+        }
 
         public async Task<int> Delete(int id) {
             var sql = "DELETE FROM Video WHERE Id = @Id;";
