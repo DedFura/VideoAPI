@@ -147,32 +147,17 @@ namespace VideoAPI.General.Controllers {
                     return View(addedVideo);
 
                 // Формируем пути
-                // Формируем путь к корневому каталогу сайта (wwwroot)
                 var webRootPath = _hostingEnvironment.WebRootPath;
-
-                // Получаем расширение файла
                 var extension = Path.GetExtension(file[0].FileName);
-
-                // Формируем полный абсолютный путь сохранения файла (с названием и расширением)
                 var uploads = Path.Combine(webRootPath, SD.VideosFolder, addedVideo.VideoModel.Name + extension);
-
-                // Формируем путь к видео файлу для модели и сохранения в базу
                 var pathToVideo = Path.Combine("\\" + SD.VideosFolder, addedVideo.VideoModel.Name + extension);
-
-                // Формируем пути для проверки, существуют ли каталоги для сохранения
                 var directoryPath = Path.Combine(webRootPath, SD.VideosFolder);
-
-                // Проверяем, существуют ли каталоги, если нет, то создаём
                 if (!Directory.Exists(directoryPath))
                     Directory.CreateDirectory(directoryPath);
-
-                // Добавляем путь к видео в модель
                 addedVideo.VideoModel.Path = pathToVideo;
 
-                // Отправляем данные для сохранения в API контрроллер
                 var response = await GenericGetDataClass<VideoVM>.AddData("api/addvideo", addedVideo);
 
-                // Обрабатываем ответ, сохранена ли модель в базу, если да, сохраняем видео на сервер
                 if (response) {
                     var stream = new FileStream(uploads, FileMode.Create);
                     await file[0].CopyToAsync(stream);
@@ -212,9 +197,6 @@ namespace VideoAPI.General.Controllers {
                 }
                 TempData["SM"] = "Видео успешно добавлены!";
                 return RedirectToAction(nameof(ShowAllVideo));
-
-                // 2. Сохранить несколько видео
-
             }
         }
 
@@ -222,19 +204,14 @@ namespace VideoAPI.General.Controllers {
         [Route("deletevideo/{id}")]
         public async Task<IActionResult> DeleteVideo(int id) {
 
-            // Получаем модель видео
             var model = await GenericGetDataClass<VideoModel>.GetAllData($"api/video/{id}");
             var response = await GenericGetDataClass<VideoModel>.DeleteData($"api/deletevideo/{id}");
 
             if (response) {
-
-                // Формируем путь к корню сайта (wwwroot)
                 var webRootPath = _hostingEnvironment.WebRootPath;
 
                 // Получаем путь из модели и удаляем первый символ (/)
                 var replacedPath = model.Path.Substring(1);
-
-                // Формируем фактический путь к файлу для удаления
                 var path = Path.Combine(webRootPath, replacedPath);
 
                 if (System.IO.File.Exists(path))
@@ -243,7 +220,7 @@ namespace VideoAPI.General.Controllers {
                 TempData["SM"] = "Видео успешно удалено!";
                 return RedirectToAction(nameof(ShowAllVideo));
             } else
-                // Реализовать вывод ошибки
+                //TODO: вывод ошибок
                 return RedirectToAction(nameof(ShowAllVideo));
         }
 
